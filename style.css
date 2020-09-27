@@ -1,0 +1,21 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+section {
+    width: 100vw;
+}
+
+section#content {
+    position: absolute;
+    bottom: 50px;
+}
+
+canvas {
+    position: relative;
+    margin: auto;
+    display: block;
+    border: 2px solid black;
+}
