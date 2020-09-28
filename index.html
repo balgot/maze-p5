@@ -7,9 +7,20 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.4/lib/p5.min.js"></script>
     <script src="sketch.js"></script>
     <script src="cell.js"></script>
+    <script src="generate.js"></script>
 </head>
 <body>
-    <section id="controls"></section>
+    <header>MAZE - p5.js</header>
+    <section id="controls">
+        <div class="buttons flex-container">
+            <button onclick="clear_maze();">Clear</button>
+            <button disabled>Draw</button>
+            <button onclick="generate();">Generate</button>
+            <button disabled>BFS</button>
+            <button disabled>DFS</button>
+            <button disabled>...</button>
+        </div>        
+    </section>
     <hr>
     <section id="content">
         <div id="maze"></div>
