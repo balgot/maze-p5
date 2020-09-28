@@ -1,0 +1,101 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Open Sans', Helvetica, arial, sans-serif;
+}
+
+header {
+    font-size: 50px;
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+    padding: 50px 0;
+    background: #f9f9f9;
+}
+
+section {
+    width: 100vw;
+}
+
+section#content {
+    position: absolute;
+    bottom: 50px;
+}
+
+canvas {
+    position: relative;
+    margin: auto;
+    display: block;
+    border: 2px solid black;
+}
+
+section#controls {
+    display: flex;
+    background: #f9f9f9;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+hr {
+    padding: 0;
+    margin: 0;
+}
+
+div.buttons {
+    margin: auto;
+}
+
+button {
+    position: relative;
+    overflow: hidden;
+    width: 15vw;
+    height: 70px;
+    text-transform: uppercase;
+    border: 1px solid;
+    margin: 5px;
+    color: #4b2294;
+    background: inherit;
+    margin-top: 4em;
+    transition: all .5s;
+    font-size: 1.15em;
+    outline: none;
+}
+
+button:last-child {
+    margin-bottom: 50px;
+}
+
+button:hover {
+    background: #4b2294;
+    color: white;
+}
+
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_animate2 */
+button:after {
+    content: "";
+    background: white;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
