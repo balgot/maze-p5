@@ -115,8 +115,15 @@ function mousePressed() {
     let draggable = [start, end];
     for (let cell of draggable) 
         if (cell && is_mouse_over(cell)) {
+            // Mark the draggable cell
             dragged_cell = cell;
-            grid[cell.row][cell.col] = new Cell(cell.row, cell.col);
+            // Create new cell
+            let new_cell = new Cell(cell.row, cell.col);
+            // Preserve same walls for the new cell
+            new_cell.walls = Array.from(cell.walls);
+            // Update grid
+            grid[cell.row][cell.col] = new_cell;
+            // Calculate offset for moving things
             offset_x = dragged_cell.x - mouseX;
             offset_y = dragged_cell.y - mouseY;
             console.log("Dragging [row, col] = " + [cell.row, cell.col])
@@ -146,13 +153,20 @@ function mouseReleased() {
         grid[row][col] = dragged_cell;
         console.log(grid[row][col].color + "--" + dragged_cell.color);
     }
-    else {        
+    else {  
+        // Find previous cell      
         let col = int(mouseX / SIZE);
         let row = int(mouseY / SIZE);
-        dragged_cell.x = grid[row][col].x;
-        dragged_cell.y = grid[row][col].y;
+        let prev_cell = grid[row][col];
+
+        // Place dragged cell
+        dragged_cell.x = prev_cell.x;
+        dragged_cell.y = prev_cell.y;
         dragged_cell.row = row;
         dragged_cell.col = col;
+        dragged_cell.walls = Array.from(prev_cell.walls);
+
+        // Update grid
         grid[row][col] = dragged_cell;
     }
 
