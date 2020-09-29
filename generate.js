@@ -28,6 +28,17 @@ function available_cells(cell, visited) {
     if (validate(row, col - 1) && !visited[row][col - 1])
         available.push(grid[row][col - 1]);
 
+    /* let row_directions = [-1, 0, 1];
+    let col_directions = [-1, 0, 1];
+    let neighbours = [];
+
+    // Make sure we always pick only one non-zero direction
+    for (let dy of row_directions)
+        for (let dx of col_directions)
+            if (dy * dx == 0 && validate(dy, dx) && !is_wall(grid[dy][dx], cell))
+                neighbours.push(grid[dy][dx]);
+    */
+
     return available;
 } 
 
@@ -85,13 +96,11 @@ function* generate_maze() {
     let gen = generate_rec(start, visited);
     for (let x of gen)
         yield x;
-    current = undefined;
-    generating = false;
+    generator = undefined;
 }
 
 
 /* Wrapper function called from outside, initialises generator. */
 function generate() {
     generator = generate_maze();
-    generating = true;
 }

@@ -75,7 +75,7 @@ button:hover {
 }
 
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_animate2 */
-/*button:after {
+button:after {
     content: "";
     background: white;
     display: block;
@@ -93,7 +93,7 @@ button:active:after {
     margin: 0;
     opacity: 1;
     transition: 0s
-}*/
+}
 
 button:disabled {
     cursor: not-allowed;

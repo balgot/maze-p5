@@ -6,8 +6,10 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.4/lib/p5.min.js"></script>
     <script src="sketch.js"></script>
+    <script src="drag.js"></script>
     <script src="cell.js"></script>
     <script src="generate.js"></script>
+    <script src="search.js"></script>
 </head>
 <body>
     <header>MAZE - p5.js</header>
@@ -17,7 +19,7 @@
             <button disabled>Draw</button>
             <button onclick="generate();">Generate</button>
             <button disabled>BFS</button>
-            <button disabled>DFS</button>
+            <button onclick="dfs();">DFS</button>
             <button disabled>...</button>
         </div>        
     </section>
