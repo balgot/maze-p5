@@ -50,7 +50,14 @@ function mouseReleased() {
     if (!dragged_cell)
         return;
 
-    // TODO: does not work if outside the canvas
+    // TODO: does not seem to be working
+    if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) {
+        console.log("Releasing out!");
+        grid[dragged_cell.row][dragged_cell.col] = dragged_cell;
+        dragged_cell = undefined;
+        return;
+    }
+
     // Find previous cell      
     let col = int(mouseX / SIZE);
     let row = int(mouseY / SIZE);

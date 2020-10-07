@@ -97,10 +97,12 @@ function* generate_maze() {
     for (let x of gen)
         yield x;
     generator = undefined;
+    current = undefined;
 }
 
 
 /* Wrapper function called from outside, initialises generator. */
 function generate() {
+    clear_maze();
     generator = generate_maze();
 }

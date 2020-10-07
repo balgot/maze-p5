@@ -24,7 +24,7 @@ class Cell {
         };
     }
 
-    show(clr=color(255, 255, 255, 40)) {
+    show(clr=color(255, 255, 255, 20)) {
         // Draw borders
         stroke(51, 51, 51, 40);
         strokeWeight(LINE_WIDTH);

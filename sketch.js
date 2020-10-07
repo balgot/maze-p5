@@ -50,7 +50,7 @@ function setup() {
     end = grid[rows - 1][cols - 1];
 
     // Set framerate to lower
-    frameRate(60);
+    frameRate(15);
 
     // Generate and solve immediately
     generate();
@@ -72,13 +72,20 @@ function logic() {
 function display_solution() {
     if (solution === [])
         return;
-    let alpha = 6;
-    for (let sol of solution) {
-        let r = (41 + alpha) % 251;
-        let g = (200 + alpha * 2) % 251;
-        let b = (120 + alpha * 7) % 251;
-        sol.show(color(r, g, b, 40));
-        alpha *= alpha;
+
+    let start_color = [252, 255, 138];
+    let end_color = [184, 69, 1];
+    let steps = solution.length;
+
+    let dr = (start_color[0] - end_color[0]) / steps;
+    let dg = (start_color[1] - end_color[1]) / steps;
+    let db = (start_color[2] - end_color[2]) / steps;
+
+    for (let i = 0; i < steps; ++i) {
+        let r = int(start_color[0] - i * dr);
+        let g = int(start_color[1] - i * dg);
+        let b = int(start_color[2] - i * db);
+        solution[i].show(color(r, g, b, 40 + i/5));
     }
 }
 

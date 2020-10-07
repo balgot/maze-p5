@@ -29,10 +29,11 @@ function get_accessible_neighbours(cell, all_neighbours) {
 /******************************************/
 
 /* Recursively performs one step of DFS search. */
-function* dfs_rec(cell, visited) {
+function* dfs_rec(cell, visited, depth=0) {
+    solution.push(cell);
     if (cell === end) {
-        solution = [];
-        solution.push(cell);
+        /*solution = [];
+        solution.push(cell);*/
         yield true;
         return;
     }
@@ -57,6 +58,7 @@ function* dfs_rec(cell, visited) {
     }
 
     current = cell;
+    solution.pop(cell);
     yield false;
 }
 
@@ -64,6 +66,7 @@ function* dfs_rec(cell, visited) {
 /* Uses DFS to find solution to the maze. */
 function* dfs_maze() {
     let visited = [];
+    let solution = [];
     for (let i = 0; i < rows; ++i) {
         visited.push([]);
         for (let j = 0; j < cols; ++j)
@@ -74,6 +77,7 @@ function* dfs_maze() {
         if (x) break;
         else yield x;
     generator = undefined;
+    current = undefined;
 }
 
 
