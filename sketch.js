@@ -108,8 +108,13 @@ function draw() {
         start.highlight(color(5, 153, 7, 100));
     if (end)
         end.highlight(color(168, 17, 12, 100));
-    if (current)
-        current.show(color(4, 176, 153, 255));
+    if (current) {
+        let current_cells = current;
+        if (!Array.isArray(current))
+            current_cells = [current];
+        for (let cell of current_cells)
+            cell.show(color(4, 176, 153, 255));
+    }
 }
 
 
