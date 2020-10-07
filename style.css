@@ -4,69 +4,64 @@ html, body {
     font-family: 'Open Sans', Helvetica, arial, sans-serif;
 }
 
-header {
-    font-size: 50px;
-    font-style: italic;
-    font-weight: 400;
-    text-align: center;
-    padding: 50px 0;
-    background: #f9f9f9;
-    width: 777px;
-    display: block;
-    margin: auto;
-}
-
-canvas {
-    position: relative;
-    margin: auto;
-    margin-top: 3em;
-    margin-bottom: 3em;
-    display: block;
-    border: 2px solid black;
-}
-
-section#controls {
+body {
+    background: linear-gradient(180deg, 
+        rgba(20,128,50,1) 0%, 
+        rgba(24,152,59,1) 15%, 
+        rgba(184,245,203,1) 15%, 
+        rgba(189,214,242,1) 100%);
+    background-attachment: fixed;
+    height: 100vh;
     display: flex;
+    justify-content: center;
 }
 
-.flex-container {
+main {
+    width: min-content;
+    height: min-content;
+    border-top: 15px solid #60cb7d;
+    background: white;
+    margin: 2em 0;
+    padding: 2em 1.25em;
+}
+
+header {
+    font-size: 3em;
+    font-weight: 460;
+    display: block;
+}
+
+p {
+    display: inline-block;
+    padding-top: 1.2em;
+    text-indent: .5em;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+section {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    width: 777px;
-    background: #f9f9f9;
+    align-items: center;
+    width: 100%;
 }
 
-hr {
-    padding: 0;
-    margin: 0;
-    width: 777px;
-    display: block;
-    margin: auto;
-    position: relative;
-}
 
-div.buttons {
-    margin: auto;
-}
+/***************************/
+/*    Part with buttons    */
+/***************************/
 
 button {
     position: relative;
-    overflow: hidden;
-    width: 200px;
-    height: 70px;
     text-transform: uppercase;
     border: 1px solid;
-    margin: 5px;
     color: #4b2294;
     background: inherit;
     transition: all .5s;
     font-size: 1.15em;
     outline: none;
-}
-
-button:last-child {
-    margin-bottom: 50px;
+    padding: .5em;
 }
 
 button:hover {
@@ -74,27 +69,24 @@ button:hover {
     color: white;
 }
 
-/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_animate2 */
-button:after {
-    content: "";
-    background: white;
-    display: block;
-    position: absolute;
-    padding-top: 300%;
-    padding-left: 350%;
-    margin-left: -20px!important;
-    margin-top: -120%;
-    opacity: 0;
-    transition: all 0.8s
-}
-
-button:active:after {
-    padding: 0;
-    margin: 0;
-    opacity: 1;
-    transition: 0s
+button:active {
+    background: #af92e2;
 }
 
 button:disabled {
     cursor: not-allowed;
+}
+
+
+
+/***************************/
+/* Canvas part of the page */
+/***************************/
+
+canvas {
+    position: relative;
+    margin: auto;
+    display: block;
+    border: 2px solid black;
+    margin: 3em 1.8em;
 }

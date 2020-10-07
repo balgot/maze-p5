@@ -12,20 +12,21 @@
     <script src="search.js"></script>
 </head>
 <body>
-    <header>MAZE - p5.js</header>
-    <section id="controls">
-        <div class="buttons flex-container">
+    <main>
+        <header>Simple maze created with <em>p5.js</em></header>
+        <p class="description">On this page we present simple maze created p5.js library. As of now, the offered functionality includes maze generation (using DFS - to each place in the maze there is exactly one path), finding the solution using DFS and BFS given starting point (marked as green), and end point (red). Both the points can be moved.</p>
+
+        <section id="content">
+            <div id="maze"></div>
+        </section>
+
+        <section id="controls">
             <button onclick="clear_maze();">Clear</button>
             <button disabled>Draw</button>
             <button onclick="generate();">Generate</button>
             <button disabled>BFS</button>
-            <button onclick="dfs();">DFS</button>
-            <button disabled>...</button>
-        </div>        
-    </section>
-    <hr>
-    <section id="content">
-        <div id="maze"></div>
-    </section>
+            <button onclick="dfs();">DFS</button>    
+        </section>
+    </main>
 </body>
 </html>
