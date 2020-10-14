@@ -2,7 +2,7 @@
 let grid = [];
 
 /* Width = Height of a cell (px) */
-const SIZE = 40;
+const SIZE = 20;
 
 /* Dimensions of the maze table */
 let cols = 0;
@@ -15,11 +15,17 @@ let end = undefined;
 /* Current cell during exploring... */
 let current = undefined;
 
-/* Booleans of current operations */
-let generating = false;
+/* Cells with the solution */
+let solution = [];
 
 /* Any generator used during functions */
 let generator = undefined;
+
+/* Do not highlight BFS solution - keep colors. */
+const keep_bfs_progress = true;
+
+/* Latest method used for solving the maze - for moving start or target. */
+let latest_solver = undefined;
 
 
 
@@ -50,14 +56,46 @@ function setup() {
     end = grid[rows - 1][cols - 1];
 
     // Set framerate to lower
-    frameRate(7);
+    frameRate(15);
+
+    // Generate and solve immediately
+    generate();
+    for (let x of generator);
+    dfs();
+    for (let x of generator);
 }
 
 
 /* Logic of the app. Called once per draw(). */
 function logic() {
-    if (generating && generator)
-        generator.next();
+    if (generator)
+        if (generator.next()["done"])
+            current = undefined;
+}
+
+
+/* Displays the solution, picks still the same color. */
+function display_solution() {
+    if (solution === [])
+        return;
+
+    let start_color = [252, 255, 138];
+    let end_color = [184, 69, 1];
+    let steps = solution.length;
+
+    let dr = (start_color[0] - end_color[0]) / steps;
+    let dg = (start_color[1] - end_color[1]) / steps;
+    let db = (start_color[2] - end_color[2]) / steps;
+
+    for (let i = 0; i < steps; ++i) {
+        let r = int(start_color[0] - i * dr);
+        let g = int(start_color[1] - i * dg);
+        let b = int(start_color[2] - i * db);
+        if (!Array.isArray(solution[i]))
+            solution[i].show(color(r, g, b, 40 + i/5));
+        else for (let s of solution[i])
+            s.show(color(r, g, b, 40 + i/5));
+    }
 }
 
 
@@ -71,13 +109,21 @@ function draw() {
         for (let j = 0; j < cols; ++j)
             grid[i][j].show();
 
+    // If we have solved the maze, disply the solution
+    display_solution();
+
     // Set colors to start, end and current
     if (start)
-        start.highlight(color(5, 153, 7, 20));
+        start.highlight(color(5, 153, 7, 100));
     if (end)
-        end.highlight(color(168, 17, 12, 20));
-    if (current)
-        current.show(color(4, 176, 153, 255));
+        end.highlight(color(168, 17, 12, 100));
+    if (current) {
+        let current_cells = current;
+        if (!Array.isArray(current))
+            current_cells = [current];
+        for (let cell of current_cells)
+            cell.show(color(4, 176, 153, 255));
+    }
 }
 
 
@@ -89,87 +135,8 @@ function clear_maze() {
     for (let row of grid)
         for (let cell of row)
             cell.reset();
+    solution = [];
+    latest_solver = undefined;
 }
 
-
-/*************************************************
-/*  Functions with moving **start** and **end** 
-/*************************************************/
-
-/* Cell being dragged */
-let dragged_cell = undefined;
-
-/* Offset from mouse coords to left top corner */
-let offset_x = undefined;
-let offset_y = undefined;
-
-
-/* Return true if mouse is over given @cell */
-function is_mouse_over(cell) {
-    return cell.x <= mouseX && mouseX <= cell.x + SIZE
-        && cell.y <= mouseY && mouseY <= cell.y + SIZE;
-}
-
-
-function mousePressed() {
-    let draggable = [start, end];
-    for (let cell of draggable) 
-        if (cell && is_mouse_over(cell)) {
-            // Mark the draggable cell
-            dragged_cell = cell;
-            // Create new cell
-            let new_cell = new Cell(cell.row, cell.col);
-            // Preserve same walls for the new cell
-            new_cell.walls = Array.from(cell.walls);
-            // Update grid
-            grid[cell.row][cell.col] = new_cell;
-            // Calculate offset for moving things
-            offset_x = dragged_cell.x - mouseX;
-            offset_y = dragged_cell.y - mouseY;
-            console.log("Dragging [row, col] = " + [cell.row, cell.col])
-            return;
-        }
-}
-
-
-function mouseDragged() {
-    if (dragged_cell) {
-        dragged_cell.x = mouseX + offset_x;
-        dragged_cell.y = mouseY + offset_y;
-    }
-}
-
-
-function mouseReleased() {
-    if (!dragged_cell)
-        return;
-
-    // TODO: does not work
-    if (mouseX < 0 || mouseY < 0 || mouseX > width || mouseY > height) {
-        console.log("Mouse left outside grid, reset position of dragged cell to"
-            + dragged_cell.row + " - " + dragged_cell.col);
-        let row = dragged_cell.row;
-        let col = dragged_cell.col;
-        grid[row][col] = dragged_cell;
-        console.log(grid[row][col].color + "--" + dragged_cell.color);
-    }
-    else {  
-        // Find previous cell      
-        let col = int(mouseX / SIZE);
-        let row = int(mouseY / SIZE);
-        let prev_cell = grid[row][col];
-
-        // Place dragged cell
-        dragged_cell.x = prev_cell.x;
-        dragged_cell.y = prev_cell.y;
-        dragged_cell.row = row;
-        dragged_cell.col = col;
-        dragged_cell.walls = Array.from(prev_cell.walls);
-
-        // Update grid
-        grid[row][col] = dragged_cell;
-    }
-
-    dragged_cell = undefined;
-}
 
