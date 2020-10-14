@@ -82,6 +82,7 @@ function* dfs_maze() {
 /* Wrapper around dfs */
 function dfs() {
     solution = [];
+    latest_solver = dfs;
     generator = dfs_maze();
 }
 
@@ -144,5 +145,6 @@ function* bfs_maze() {
 
 function bfs() {
     solution = [];
+    latest_solver = bfs;
     generator = bfs_maze();
 }

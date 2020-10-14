@@ -24,6 +24,9 @@ let generator = undefined;
 /* Do not highlight BFS solution - keep colors. */
 const keep_bfs_progress = true;
 
+/* Latest method used for solving the maze - for moving start or target. */
+let latest_solver = undefined;
+
 
 
 /* Prepare the environment, create buttons, sliders and canvas */
@@ -133,6 +136,7 @@ function clear_maze() {
         for (let cell of row)
             cell.reset();
     solution = [];
+    latest_solver = undefined;
 }
 
 

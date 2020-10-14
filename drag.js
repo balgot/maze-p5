@@ -74,8 +74,8 @@ function mouseReleased() {
     grid[row][col] = dragged_cell;
 
     // If we had a solution found, recalculate it if we took start or end
-    if ((dragged_cell === start || dragged_cell == end) && solution.length) {
-        dfs();
+    if ((dragged_cell === start || dragged_cell == end) && latest_solver) {
+        latest_solver();
         for (let x of generator);
     }
 
