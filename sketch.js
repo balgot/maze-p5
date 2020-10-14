@@ -2,7 +2,7 @@
 let grid = [];
 
 /* Width = Height of a cell (px) */
-const SIZE = 40;
+const SIZE = 20;
 
 /* Dimensions of the maze table */
 let cols = 0;
@@ -20,6 +20,9 @@ let solution = [];
 
 /* Any generator used during functions */
 let generator = undefined;
+
+/* Do not highlight BFS solution - keep colors. */
+const keep_bfs_progress = true;
 
 
 
@@ -85,7 +88,10 @@ function display_solution() {
         let r = int(start_color[0] - i * dr);
         let g = int(start_color[1] - i * dg);
         let b = int(start_color[2] - i * db);
-        solution[i].show(color(r, g, b, 40 + i/5));
+        if (!Array.isArray(solution[i]))
+            solution[i].show(color(r, g, b, 40 + i/5));
+        else for (let s of solution[i])
+            s.show(color(r, g, b, 40 + i/5));
     }
 }
 

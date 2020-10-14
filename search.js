@@ -49,7 +49,6 @@ function* dfs_rec(cell, visited, depth=0) {
             return false;
         for (x of dfs_rec(next_cell, visited)) {
             if (x) {
-                solution.push(cell);
                 yield x;
                 return;
             }
@@ -66,7 +65,6 @@ function* dfs_rec(cell, visited, depth=0) {
 /* Uses DFS to find solution to the maze. */
 function* dfs_maze() {
     let visited = [];
-    let solution = [];
     for (let i = 0; i < rows; ++i) {
         visited.push([]);
         for (let j = 0; j < cols; ++j)
@@ -85,4 +83,66 @@ function* dfs_maze() {
 function dfs() {
     solution = [];
     generator = dfs_maze();
+}
+
+
+/******************************************/
+/*    Breadth-first search                */
+/******************************************/
+
+function* bfs_maze() {
+    // Contains references to parents
+    let visited = [];
+    for (let i = 0; i < rows; ++i) {
+        visited.push([]);
+        for (let j = 0; j < cols; ++j)
+            visited[i].push(undefined);
+    }
+
+    current = [start];
+    visited[start.row][start.col] = start; // !
+    let found = false;
+
+    while (current.length && !found) {
+        let current_copy = current;
+        solution.push(current);
+        current = [];
+        for (let cell of current_copy) {
+            if (cell === end) {
+                found = true;
+                break;
+            }
+
+            let all_neighbours = available_cells(cell, visited);
+            let accessible = get_accessible_neighbours(cell, all_neighbours);
+            for (let neighbour of accessible) {
+                current.push(neighbour);
+                visited[neighbour.row][neighbour.col] = cell;
+            }
+        }
+
+        yield true;
+    }
+
+    current = undefined;
+    if (!found || keep_bfs_progress)
+        return;
+
+    let current_cell = end;
+    solution = [];
+    while (current_cell != undefined && current_cell != false) {
+        solution.push(current_cell);
+        let r = current_cell.row;
+        let c = current_cell.col;
+        current_cell = visited[r][c];
+        visited[r][c] = undefined;
+    }
+
+    solution = solution.reverse();
+}
+
+
+function bfs() {
+    solution = [];
+    generator = bfs_maze();
 }
